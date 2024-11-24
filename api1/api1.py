@@ -9,17 +9,14 @@ def fetch_weather_data(place):
     return response.text
 
 
-def get_weather_safely(place):
-    try:
-        return fetch_weather_data(place)
-    except requests.exceptions.RequestException as err:
-        return f'Error occurred while fetching weather for {place}: {err}'
-
-
 def main():
     places = ['Лондон', 'Шереметьево', 'Череповец']
     for place in places:
-        print(f'Weather data for {place}:\n{get_weather_safely(place)}\n')
+        try:
+            weather = fetch_weather_data(place)
+            print(f'Weather data for {place}:\n{weather}\n')
+        except requests.exceptions.RequestException as err:
+            print(f'Error occurred while fetching weather for {place}: {err}\n')
 
 
 if __name__ == "__main__":
